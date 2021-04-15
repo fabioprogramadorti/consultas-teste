@@ -1,12 +1,17 @@
+import React from "react"
+import ReactDOM from "react-dom"
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { AppWrapper } from '../context/state'
+import { MyContext } from '../context/state'
+
 
 function MyApp({ Component, pageProps }) {
+
   return (
-    <AppWrapper>
+    <MyContext>
       <Component {...pageProps} />
-    </AppWrapper>
+    </MyContext>
   )
 }
 

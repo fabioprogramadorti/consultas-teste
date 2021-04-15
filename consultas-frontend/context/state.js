@@ -1,33 +1,84 @@
-import { createContext, useContext, useState } from 'react'
+import React, { Component } from "react"
 
-const AppContext = createContext()
+import { getAllConsultas, getAllMedicos } from '../lib/consultas'
+const ConsultasContext = React.createContext();
 
-function updateState(id) {
+const ConsultasProvider = ConsultasContext.Provider;
+const ConsultasConsumer = ConsultasContext.Consumer;
 
-}
 
-export function AppWrapper({ children }) {
+class MyContext extends Component {
 
-  let state =  {
-    agendamentos:[
-      { id: 1, paciente: 'Fulano', medico: 'Ciclano', data: '2020-10-10' },
-      { id: 2, paciente: 'Beltrano', medico: 'João', data: '2020-10-10' },
-      { id: 3, paciente: 'Zé', medico: 'Nelson', data: '2020-10-10' },
-    ]
+  state = {
+    consultas: [],
+    medicos: []
   }
 
+  componentDidMount() {
+    this.state.consultas = getAllConsultas()
+    this.state.medicos = getAllMedicos()
+  }
 
-  return (
-    <AppContext.Provider 
-      value={{
-        state, 
-        updateState
-        }}>
-      {children}
-    </AppContext.Provider>
-  )
+  handleChange = (id) => {
+    this.setState({
+      consultas: this.state.consultas.map((consulta) => {
+        if (consulta.id === id) {
+          consulta.completed = !consulta.completed;
+        }
+        return consulta;
+      }),
+    });
+  };
+
+  delConsulta = (id) => {
+    this.setState({
+      consultas: [
+        ...this.state.consultas.filter((consulta) => {
+          return consulta.id !== id;
+        }),
+      ],
+    });
+  };
+
+  addConsultaItem = (title) => {
+    const newConsulta = {
+      id: uuidv4(),
+      title: title,
+      completed: false,
+    };
+    this.setState({
+      consultas: [...this.state.consultas, newConsulta],
+    });
+  };
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.addConsultaItem(this.state.title);
+    this.setState({
+      title: "",
+    });
+  };
+  render() {
+    return (
+      <ConsultasProvider
+        value={{
+          ...this.state,
+          handleChange: this.handleChange,
+          delConsulta: this.delConsulta,
+          addConsultaItem: this.addConsultaItem,
+        }}
+      >
+        {this.props.children}
+      </ConsultasProvider>
+    );
+  }
 }
 
-export function useAppContext() {
-  return useContext(AppContext)
-}
+
+export { ConsultasContext, MyContext, ConsultasConsumer };

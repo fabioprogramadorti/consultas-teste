@@ -1,7 +1,7 @@
 require('dotenv').config()
+const cors = require('cors')
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-
 import express from 'express'
 import consultasRouter from './routes/consultas.routes'
 import medicosRouter from './routes/medicos.routes'
@@ -14,8 +14,17 @@ app.use(urlencoded({ extended: true }))
 app.use(json())
 
 // Routes
+app.use((req, res, next) => {
+  //Qual site tem permissão de realizar a conexão, no exemplo abaixo está o "*" indicando que qualquer site pode fazer a conexão
+  res.header("Access-Control-Allow-Origin", "*");
+  //Quais são os métodos que a conexão pode realizar na API
+  res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
+  app.use(cors());
+  next();
+});
 app.use('/consultas', consultasRouter)
 app.use('/medicos', medicosRouter)
+
 
 
 // Database
