@@ -50,10 +50,11 @@ export default function EditForm(props) {
                   onChange={e => setAgendamento({...agendamento, medico:e.target.value})}
                 >
                   <option></option>
-                  {
+                  {props.medicos ?
                     props.medicos.map(medicoEscolhido => (
                       <option key={medicoEscolhido}>{medicoEscolhido}</option>
                     ))
+                    : ''
                   }
                 </Form.Control>
               </Form.Group>

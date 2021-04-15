@@ -13,10 +13,11 @@ class MyContext extends Component {
     consultas: [],
     medicos: []
   }
-
-  componentDidMount() {
-    this.state.consultas = getAllConsultas()
-    this.state.medicos = getAllMedicos()
+  
+  async listConsultas() {
+    const consultas = await getAllConsultas()
+    const medicos = await getAllMedicos()
+    this.setState({consultas, medicos})
   }
 
   handleChange = (id) => {
@@ -64,7 +65,13 @@ class MyContext extends Component {
       title: "",
     });
   };
+  
+  componentDidMount(){
+    this.listConsultas()
+  }
+
   render() {
+    
     return (
       <ConsultasProvider
         value={{
