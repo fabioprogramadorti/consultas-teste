@@ -31,13 +31,13 @@ export default class MyContext extends Component {
     this.setState({ consultas, medicos })
   }
 
-  updateConsulta = (id, data) => {
-    updateConsulta(id, data)
+  updateConsulta = async (id, data) => {
+    await updateConsulta(id, data)
     this.listConsultas()
   }
 
-  delConsulta = (id) => {
-    deleteConsulta(id)
+  delConsulta = async (id) => {
+    await deleteConsulta(id)
     this.listConsultas()
   }
 
