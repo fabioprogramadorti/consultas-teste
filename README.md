@@ -1,26 +1,51 @@
-# Desafio DEV - TEM
-Desenvolva uma aplicação com NodeJS(backend) e ReactJS(front-end) para agendamento de consultas.
+<p align="center">
+ <a href="#-sobre-o-projeto">Sobre</a> •
+ <a href="#-como-executar-o-projeto">Como executar</a> • 
+ <a href="#-autor">Autor</a> • 
+</p>
 
-### Requisitos
-A aplicação deve possuir:
-- Listagem de agendamentos com ações de Adicionar, Alterar, Deletar
-- Formulário de agendamento
 
-Os campos de agendamento serão:
-- Nome do Paciente(Text Input)
-- Médico (Select Input)
-- Data do Agendamento(DateTime Input)
+## 💻 Sobre o projeto
 
-Utilização de gerenciamento de estado para aplicação React (Redux, ContextApi, ou qualquer outra de sua preferência )
+ Este projeto é feito utilizando Node, Next.js e Mongodb. O banco de dados estará rodando na nuvem na plataforma Atlas do MongoDB. Junto ao projeto foi enviado um arquivo do Insomnia para testar a API.
 
-Realização dos testes em alguma biblioteca de sua preferência  (Jest, etc..)
+---
 
-### Diferenciais
-- Subir aplicação em algum serviço como (netfly, surge e etc)
-- Documentação de API
+## 🚀 Como executar o projeto
 
-### Observações
+### Pré-requisitos
 
-Caso seu teste seja apenas para FrontEnd realizar a criação da aplicação com dados Mockados.
+Antes de começar, você vai precisar ter instaladas em sua máquina as seguintes ferramentas:
 
-Ao terminar o projeto envie um pull-request para este repositório.
+- [Docker](https://www.docker.com/)
+- [Docker-compose](https://docs.docker.com/compose/install/)
+- [Node](https://nodejs.org/en/)
+
+
+### 🎲 Rodando a aplicação
+Na pasta rais do projeto rode o seguinte comando
+
+```bash
+
+# Este comando vai subir o banco de dados mongoDB caso não exista na máquina
+docker-compose up --build
+
+# Para instalar as dependências
+yarn
+
+# para rodar a aplicação
+yarn start
+```
+- O server estará em *http://localhost:3000*
+
+---
+
+## 🦸 Autor
+
+<a href="https://github.com/fabioprogramadorti">
+ <img style="border-radius: 50%;" src="./img/fabio.jpeg" width="100px;" alt=""/>
+ <br />
+ <sub><b>Fabio Santos</b></sub></a> <a href="https://github.com/fabioprogramadorti" title="Rocketseat">🚀</a>
+ <br />
+
+[![Gmail Badge](https://img.shields.io/badge/-fabioprogramadorti@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:fabioprogramadorti@gmail.com)](mailto:fabioprogramadorti@gmail.com)
