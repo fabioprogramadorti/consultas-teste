@@ -5,20 +5,28 @@ import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Button, Form, Col } from 'react-bootstrap'
 import { ConsultasContext } from '../pages/state'
 
+const initialState = {
+  show: false,
+  consulta: {
+    paciente: '',
+    data: '',
+    medico: ''
+  }
+}
 export default class EditForm extends Component {
   static contextType = ConsultasContext
   
   state = {
-    show: false,
-    consulta: {},
-    medicos: []
+    ...initialState
   }
 
-  value = this.context
+  store = this.context
 
   componentDidMount() {
-    this.state.consulta = this.props.id ? this.value.consultas.filter(consulta => consulta._id == this.props.id).pop() : {}
-    this.state.medicos = this.context.medicos
+    this.setState({
+      consulta:
+        this.props.id ? this.store.consultas.filter(consulta => consulta._id == this.props.id).pop() : {}
+    })
   }
 
   handleClose = () => {
@@ -26,7 +34,21 @@ export default class EditForm extends Component {
   }
 
   handleShow = () => {
-    this.setState({show:true})
+    this.setState({ show: true })
+  }
+
+  save = (e) => {
+    e.preventDefault()
+    let consulta = this.state.consulta
+    if(this.state.consulta._id) {
+      let id = this.state.consulta._id
+      this.store.updateConsulta(id, consulta)
+    } else {
+      this.store.addConsulta(consulta)
+    }
+    this.handleClose()
+    this.setState(initialState)
+
   }
 
   render() {
@@ -53,9 +75,9 @@ export default class EditForm extends Component {
                   <Form.Control
                     type="text"
                     required
-                    value={this.state.consulta ? this.state.consulta.paciente : ''}
+                    defaultValue={this.state.consulta.paciente}
                     placeholder="Nome do Paciente"
-                    onChange={e => this.setState({consulta:{...this.state.consulta, paciente: e.target.value}})}
+                    onChange={e => this.setState({ consulta: { ...this.state.consulta, paciente: e.target.value } })}
                   />
                 </Form.Group>
 
@@ -64,12 +86,12 @@ export default class EditForm extends Component {
                   <Form.Control 
                     required 
                     as="select" 
-                    defaultValue={this.state.consulta.medico} 
-                    onChange={e => this.setState({consulta: {...this.state.consulta, medico:e.target.value}})}
+                    defaultValue={this.state.consulta.medico ? this.state.consulta.medico : '' }
+                    onChange={e => this.setState({ consulta: { ...this.state.consulta, medico: e.target.value } }) }
                   >
                     <option></option>
                     {
-                      this.state.medicos.map(medicoEscolhido => (
+                      this.store.medicos.map(medicoEscolhido => (
                         <option key={medicoEscolhido}>{medicoEscolhido}</option>
                       ))
                     }
@@ -83,8 +105,8 @@ export default class EditForm extends Component {
                 <Form.Control 
                   type="date" 
                   required 
-                  value={this.state.consulta.data} 
-                  onChange={e => this.setState({consulta:{ ...this.state.consulta, data: e.target.value }})}
+                  defaultValue={this.state.consulta.data} 
+                  onChange={e => this.setState({ consulta: { ...this.state.consulta, data: e.target.value } })}
                 />
               </Form.Group>
 
@@ -92,7 +114,7 @@ export default class EditForm extends Component {
           </Modal.Body>
           <Modal.Footer>
 
-            <Button variant="success" onClick={this.handleClose}>
+            <Button variant="success" onClick={(e) => this.save(e)}>
               <FontAwesomeIcon icon={faSave}  />
             </Button>
 

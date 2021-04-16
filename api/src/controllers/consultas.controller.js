@@ -1,10 +1,12 @@
 import ConsultasModel from '../models/consultas.model'
 import MedicosModel from '../models/medicos.model'
 
+
 export async function list(req, res) {
   try{
     const todasConsultas = await ConsultasModel.find({})
-    res.json(todasConsultas) 
+
+    res.json(todasConsultas)
   } catch(err) {
     res.json({
       status: 'error',

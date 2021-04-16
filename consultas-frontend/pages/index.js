@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
-import FormModal from '../components/FormModal'
-import DeleteModal from '../components/DeleteModal'
+import EditForm from '../components/FormModal'
+import DeleteForm from '../components/DeleteModal'
 import { faPlus, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { ConsultasContext } from './state'
 import { Component } from 'react'
+import moment from 'moment'
 
 class Home extends Component {
   static contextType = ConsultasContext
@@ -24,12 +25,11 @@ class Home extends Component {
             Agendamento de Consultas
           </h1>
 
-          <FormModal variant="success" icon={faPlus} />
+          <EditForm variant="success" icon={faPlus} />
 
             <table className="table table-striped my-2">
               <thead className="thead-dark">
                 <tr className="text-center">
-                  <th scope="col">#</th>
                   <th scope="col">Paciente</th>
                   <th scope="col">Médico</th>
                   <th scope="col">Data</th>
@@ -39,28 +39,21 @@ class Home extends Component {
               <tbody>
                 {store.consultas.map(agendamento => (
                   <tr className="text-center" key={agendamento._id}>
-                    <th scope="row">{agendamento.id}</th>
                     <td>{agendamento.paciente}</td>
                     <td>{agendamento.medico}</td>
-                    <td>{agendamento.data}</td>
+                    <td>{moment(agendamento.data).format('DD/MM/YYYY')}</td>
                     <td>
-                      <FormModal
+                      <EditForm
                         variant="primary"
                         icon={faEdit}
                         id={agendamento._id}
                       />
-                      <DeleteModal />
+                      <DeleteForm id={agendamento._id} />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-
-        
-        
-          
-
-         
         </div>
       </Container>
     )
