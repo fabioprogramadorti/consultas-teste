@@ -86,13 +86,14 @@ export default class EditForm extends Component {
                   <Form.Control 
                     required 
                     as="select" 
-                    defaultValue={this.state.consulta.medico ? this.state.consulta.medico : '' }
+                    defaultValue={this.state.medico}
                     onChange={e => this.setState({ consulta: { ...this.state.consulta, medico: e.target.value } }) }
                   >
+                    {this.state.medico ? console.log(this.store.medicos) : ''}
                     <option></option>
                     {
-                      this.store.medicos.map(medicoEscolhido => (
-                        <option key={medicoEscolhido}>{medicoEscolhido}</option>
+                      this.store.medicos.map(medico => (
+                        <option key={medico}>{medico}</option>
                       ))
                     }
                   </Form.Control>

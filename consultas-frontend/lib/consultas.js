@@ -33,7 +33,6 @@ export async function deleteConsulta(id) {
 }
 
 export async function getAllMedicos(id) {
-  console.log(API_URL)
   const res = await axios.get(`${API_URL}/medicos`)
   const medicos = res.data
   const nomesMedicos = medicos.map(medico => {return medico.nome})
