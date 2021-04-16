@@ -1,18 +1,19 @@
 import moment from 'moment'
 import React, { Component } from "react"
-import { 
-  getAllConsultas, 
-  createConsulta, 
-  updateConsulta, 
-  deleteConsulta, 
-  getAllMedicos } from '../lib/consultas'
+import {
+  getAllConsultas,
+  createConsulta,
+  updateConsulta,
+  deleteConsulta,
+  getAllMedicos
+} from '../lib/consultas'
 
 const ConsultasContext = React.createContext()
 
 const ConsultasProvider = ConsultasContext.Provider
 const ConsultasConsumer = ConsultasContext.Consumer
 
-class MyContext extends Component {
+export default class MyContext extends Component {
 
   state = {
     consultas: [],
@@ -27,7 +28,7 @@ class MyContext extends Component {
       consulta.data = moment(consulta.data).format('YYYY-MM-DD')
     })
     console.log(consultas)
-    this.setState({consultas, medicos})
+    this.setState({ consultas, medicos })
   }
 
   updateConsulta = (id, data) => {
@@ -40,18 +41,18 @@ class MyContext extends Component {
     this.listConsultas()
   }
 
-  addConsulta = (consulta) => {
-    createConsulta(consulta)
+  addConsulta = async (consulta) => {
+    await createConsulta(consulta)
     this.listConsultas()
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
     this.listConsultas()
   }
 
   render() {
-    
+
     return (
       <ConsultasProvider
         value={{
@@ -68,4 +69,4 @@ class MyContext extends Component {
 }
 
 
-export { ConsultasContext, MyContext, ConsultasConsumer }
+export { ConsultasContext, ConsultasConsumer }
