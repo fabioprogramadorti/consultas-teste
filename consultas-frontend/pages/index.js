@@ -11,7 +11,7 @@ class Home extends Component {
   static contextType = ConsultasContext
 
   render() {
-    const store = this.context;
+    const store = this.context
     return (
       <Container>
 
@@ -25,7 +25,7 @@ class Home extends Component {
             Agendamento de Consultas
           </h1>
 
-          <EditForm variant="success" icon={faPlus} />
+          <EditForm variant="success" icon={faPlus} medicos={store.medicos}/>
 
             <table className="table table-striped my-2">
               <thead className="thead-dark">

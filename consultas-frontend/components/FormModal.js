@@ -5,6 +5,7 @@ import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { Button, Form, Col } from 'react-bootstrap'
 import { ConsultasContext } from '../pages/state'
 
+
 const initialState = {
   show: false,
   consulta: {
@@ -15,7 +16,7 @@ const initialState = {
 }
 export default class EditForm extends Component {
   static contextType = ConsultasContext
-  
+
   state = {
     ...initialState
   }
@@ -30,7 +31,7 @@ export default class EditForm extends Component {
   }
 
   handleClose = () => {
-    this.setState({show:false})
+    this.setState({ show: false })
   }
 
   handleShow = () => {
@@ -40,7 +41,7 @@ export default class EditForm extends Component {
   save = (e) => {
     e.preventDefault()
     let consulta = this.state.consulta
-    if(this.state.consulta._id) {
+    if (this.state.consulta._id) {
       let id = this.state.consulta._id
       this.store.updateConsulta(id, consulta)
     } else {
@@ -83,18 +84,24 @@ export default class EditForm extends Component {
 
                 <Form.Group as={Col} controlId="formGridMedico">
                   <Form.Label>Médico</Form.Label>
-                  <Form.Control 
-                    required 
-                    as="select" 
-                    defaultValue={this.state.medico}
-                    onChange={e => this.setState({ consulta: { ...this.state.consulta, medico: e.target.value } }) }
+                  <Form.Control
+                    required
+                    as="select"
+                    defaultValue={this.state.consulta.medico}
+                    onChange={e => this.setState({ consulta: { ...this.state.consulta, medico: e.target.value } })}
                   >
-                    {this.state.medico ? console.log(this.store.medicos) : ''}
                     <option></option>
+
                     {
-                      this.store.medicos.map(medico => (
-                        <option key={medico}>{medico}</option>
-                      ))
+                      this.props.medicos ?
+                        this.props.medicos.map(medico => (
+
+                          <option key={medico}>{medico}</option>
+                        )) :
+                        this.store.medicos.map(medico => (
+
+                          <option key={medico}>{medico}</option>
+                        ))
                     }
                   </Form.Control>
                 </Form.Group>
@@ -103,10 +110,10 @@ export default class EditForm extends Component {
 
               <Form.Group controlId="formGridDate">
                 <Form.Label>Data</Form.Label>
-                <Form.Control 
-                  type="date" 
-                  required 
-                  defaultValue={this.state.consulta.data} 
+                <Form.Control
+                  type="date"
+                  required
+                  defaultValue={this.state.consulta.data}
                   onChange={e => this.setState({ consulta: { ...this.state.consulta, data: e.target.value } })}
                 />
               </Form.Group>
@@ -116,11 +123,11 @@ export default class EditForm extends Component {
           <Modal.Footer>
 
             <Button variant="success" onClick={(e) => this.save(e)}>
-              <FontAwesomeIcon icon={faSave}  />
+              <FontAwesomeIcon icon={faSave} />
             </Button>
 
             <Button variant="danger" onClick={this.handleClose}>
-              <FontAwesomeIcon icon={faTimes}  />
+              <FontAwesomeIcon icon={faTimes} />
             </Button>
           </Modal.Footer>
         </Modal>
