@@ -1,9 +1,11 @@
 <p align="center">
  <a href="#-sobre-o-projeto">Sobre</a> •
- <a href="#-como-executar-o-projeto">Como executar</a> • 
+ <a href="#-funcionamento-da-api">Funcionamento</a> • 
  <a href="#-autor">Autor</a> • 
 </p>
 
+
+# https://consultas-frontend.vercel.app/
 
 ## 💻 Sobre o projeto
 
@@ -11,32 +13,108 @@
 
 ---
 
-## 🚀 Como executar o projeto
 
-### Pré-requisitos
+## 🎲 Funcionamento da API
 
-Antes de começar, você vai precisar ter instaladas em sua máquina as seguintes ferramentas:
-
-- [Docker](https://www.docker.com/)
-- [Docker-compose](https://docs.docker.com/compose/install/)
-- [Node](https://nodejs.org/en/)
-
-
-### 🎲 Rodando a aplicação
-Na pasta rais do projeto rode o seguinte comando
+## Criando Consulta
 
 ```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{
+      "paciente": "Fulano",
+      "medico": "Ciclano",
+      "data": "2021-04-02" 
+    }' \
+  https://consultas-api.herokuapp.com/consultas
 
-# Este comando vai subir o banco de dados mongoDB caso não exista na máquina
-docker-compose up --build
-
-# Para instalar as dependências
-yarn
-
-# para rodar a aplicação
-yarn start
 ```
-- O server estará em *http://localhost:3000*
+
+## Listando consultas
+```bash
+curl --header "Content-Type: application/json" \
+  --request GET \
+  https://consultas-api.herokuapp.com/consultas
+
+```
+
+## Atualizando Consulta
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request PUT \
+  --data '{
+      "paciente": "Fulano",
+      "medico": "Ciclano",
+      "data": "2021-04-02" 
+    }' \
+  https://consultas-api.herokuapp.com/consultas/[id] #id da consulta
+```
+
+## Consulta por ID
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request GET \
+  https://consultas-api.herokuapp.com/consultas/[id] #id da consulta
+```
+
+## Deletando uma consulta
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request DELETE \
+  https://consultas-api.herokuapp.com/consultas/[id] #id da consulta
+```
+
+## Criando Médico
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{
+      "nome": "Fulano"
+    }' \
+  https://consultas-api.herokuapp.com/medicos
+
+```
+## Listando Médicos
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request GET \
+  https://consultas-api.herokuapp.com/medicos
+
+```
+
+## Médico por id
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request GET \
+  https://consultas-api.herokuapp.com/medicos/[id] #id do médico
+```
+
+## Atualizando Médicos
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request PUT \
+  --data '{
+      "nome": "Outro nome"
+    }' \
+  https://consultas-api.herokuapp.com/medicos/[id] # id do médico
+
+```
+
+## Deletando Médico
+
+```bash
+curl --header "Content-Type: application/json" \
+  --request DELETE \
+  https://consultas-api.herokuapp.com/medicos/[id] #id do médico
+
+```
 
 ---
 
