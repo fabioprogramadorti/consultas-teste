@@ -13,7 +13,7 @@ class MyContext extends Component {
     consultas: [],
     medicos: []
   }
-  
+
   async listConsultas() {
     const consultas = await getAllConsultas()
     const medicos = await getAllMedicos()
@@ -65,7 +65,7 @@ class MyContext extends Component {
       title: "",
     });
   };
-  
+
   componentDidMount(){
     this.listConsultas()
   }

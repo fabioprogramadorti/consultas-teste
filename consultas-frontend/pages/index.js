@@ -10,7 +10,7 @@ class Home extends Component {
   static contextType = ConsultasContext
 
   render() {
-    const value = this.context;
+    const store = this.context;
     return (
       <Container>
 
@@ -24,7 +24,7 @@ class Home extends Component {
             Agendamento de Consultas
           </h1>
 
-          <FormModal variant="success" icon={faPlus} medicos={value.medicos} />
+          <FormModal variant="success" icon={faPlus} />
 
             <table className="table table-striped my-2">
               <thead className="thead-dark">
@@ -37,7 +37,7 @@ class Home extends Component {
                 </tr>
               </thead>
               <tbody>
-                {value.consultas.map(agendamento => (
+                {store.consultas.map(agendamento => (
                   <tr className="text-center" key={agendamento._id}>
                     <th scope="row">{agendamento.id}</th>
                     <td>{agendamento.paciente}</td>
@@ -47,8 +47,7 @@ class Home extends Component {
                       <FormModal
                         variant="primary"
                         icon={faEdit}
-                        agendamento={agendamento}
-                        medicos={value.medicos}
+                        id={agendamento._id}
                       />
                       <DeleteModal />
                     </td>
